@@ -30,6 +30,8 @@ def home():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    if "userid" in session:
+        return redirect(url_for("home"))
     if request.method == "POST":
         position = request.form.get("position")
         username = request.form.get("Username")
@@ -47,6 +49,8 @@ def login():
 
 @app.route("/register", methods=["GET", "POST"])
 def register(): # this method will only ever handle post requests
+    if "userid" in session:
+        return redirect(url_for("login"))
     if request.method == "POST":
         if sha256(request.form.get("password").encode()).hexdigest() == sha256(request.form.get("password-reenter").encode()).hexdigest():
             hashed_password = sha256(request.form.get("password-reenter").encode()).hexdigest()
