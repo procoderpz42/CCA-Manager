@@ -3,30 +3,20 @@ import sqlite3
 from contextlib import closing
 from hashlib import sha256
 import secrets
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 
 app = Flask(__name__)
 app.secret_key = secrets.token_urlsafe(32)
+app.permanent_session_lifetime = timedelta(minutes=10)
+
 
 def query(db_name, sql):
     with closing(sqlite3.connect(db_name)) as con, con,  \
             closing(con.cursor()) as cur:
         cur.execute(sql)
         return cur.fetchall()
-
-
-@app.route("/")
-def home():
-    if "userid" not in session:
-        return redirect(url_for("login"))
-    else:
-        result = query("Server.db", f"SELECT firstname, email FROM {session["position"]} WHERE {session["position"]}id = '{session["userid"]}' LIMIT 1;")[0]
-        session["email"] = result[1]
-        session["firstname"] = result[0]
-        print(session["email"])
-        return render_template("HomePage.html", session=session)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -43,6 +33,7 @@ def login():
             return render_template("Login.html", error="Entered partculars are Wrong")
         session["position"] = position
         session["userid"] = result[0][0]
+        session.permanent = True
         return redirect(url_for("home"))
     elif request.method == "GET":
         return render_template("Login.html", error="")
@@ -71,5 +62,18 @@ def register(): # this method will only ever handle post requests
 
     elif request.method == "GET":
         return render_template("Register.html", error="")
+    
+@app.route("/")
+def home():
+    if "userid" not in session:
+        return redirect(url_for("login"))
+    else:
+        result = query("Server.db", f"SELECT firstname, email FROM {session["position"]} WHERE {session["position"]}id = '{session["userid"]}' LIMIT 1;")[0]
+        session["email"] = result[1]
+        session["firstname"] = result[0]
+        return render_template("HomePage.html", session=session)
+    
+
+
 if __name__=="__main__":
     app.run(debug=True, port=2000)
