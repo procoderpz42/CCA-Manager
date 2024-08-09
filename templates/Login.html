@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h1>User Login</h1>
+    <button type="button" onclick="location.href = '/register'">Not Registered? Go to Registration</button>
+    <h2 style="color: crimson; border: 4px black solid c; border-radius: 20px; font-size: 40px; background-color: grey;">{{ error }}</h2>
+    <form action="/login" method="post">
+        <label for="position">Role</label><select name="position" id="position">
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+        </select>
+        <label for="Username">User Name:</label><input type="text" name="Username" id="Username"><br>
+        <label for="Password">Password:</label><input type="text" name="Password" id="Password"><br>
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>

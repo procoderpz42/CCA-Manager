@@ -9,12 +9,20 @@
 
 <body>
     <h1>Register New User</h1>
-    <form action="/register" method="POST">
-        <label for="username">User Name:</label><input type="text" name="username" id="username" required><br>
-        <label for="password">Password:</label><input type="password" name="password" id="password" required><br>
+    <button type="button" onclick="location.href='/login'">Already Registered? Go to Login</button>
+    <h2 style="color: crimson; border: 4px black solid c; border-radius: 20px; font-size: 40px; background-color: grey;">{{ error }}</h2>
+    <form action="/register" method="post">
+        <label for="position">Role:</label><select name="position" id="position">
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+        </select><br>
+        <label for="firstname">First Name:</label><input type="text" name="firstname" id="firstname" required><br>
+        <label for="lastname">Last Name:</label><input type="text" name="lastname" id="lastname" required><br>
         <label for="email">Email:</label><input type="email" name="email" id="email" required><br>
+        <label for="nric">(Username) NRIC:</label><input type="text" name="nric" id="nric" required><br>
+        <label for="password">Password:</label><input type="password" name="password" id="password" required><br>
+        <label for="password-reenter">Re-Enter Password:</label><input type="password" name="password-reenter" id="password-reenter" required><br>
         <input type="submit" value="Register">
     </form>
 </body>
-
 </html>
