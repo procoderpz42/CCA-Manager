@@ -13,6 +13,6 @@ Project log:
   - 10/8 -11/8 : implemented "/logout". realised that for testing any future features i need test data. pushed fresh data to student , teacher & cca tables
     
 Project implementable ideas: 
-  - attendance system.
+  - attendance system. (Working on it!!!)
   - assessment (Grade) tracking
   - submission tracking
