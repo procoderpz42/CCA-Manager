@@ -18,6 +18,7 @@ def query(db_name, sql):
         cur.execute(sql)
         return cur.fetchall()
 
+@app.route("/")
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if "userid" in session:
@@ -28,7 +29,7 @@ def login():
         password = request.form.get("Password")
         hashed_password = sha256(password.encode()).hexdigest()
 
-        result = query("Server.db", f"SELECT {position}id AS id FROM {position} WHERE nric = '{username}' AND hashedpassword = '{hashed_password}' LIMIT 1;")
+        result = query("Server.db", f"SELECT id FROM {position} WHERE nric = '{username}' AND hashedpassword = '{hashed_password}' LIMIT 1;")
         if len(result) != 1:
             return render_template("Login.html", error="Entered partculars are Wrong")
         session["position"] = position
@@ -63,15 +64,20 @@ def register(): # this method will only ever handle post requests
     elif request.method == "GET":
         return render_template("Register.html", error="")
     
-@app.route("/")
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
+@app.route("/profile")
 def home():
     if "userid" not in session:
         return redirect(url_for("login"))
     else:
-        result = query("Server.db", f"SELECT firstname, email FROM {session["position"]} WHERE {session["position"]}id = '{session["userid"]}' LIMIT 1;")[0]
+        result = query("Server.db", f"SELECT firstname, email FROM {session["position"]} WHERE id = '{session["userid"]}' LIMIT 1;")[0]
         session["email"] = result[1]
         session["firstname"] = result[0]
-        return render_template("HomePage.html", session=session)
+        return render_template("Profile.html", session=session)
     
 
 
