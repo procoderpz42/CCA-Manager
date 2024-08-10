@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>HomePage</title>
+</head>
+<body>
+    <header>
+        <nav id="nav">
+            <ul id="nav-ul">
+                <li id="nav-li"><a href="/">Home</a></li>
+                {% if session["position"] == "teacher" %}
+                    <li id="nav-li"><a href="/create_session">Create Session</a></li>
+                {% endif %}
+                <li id="nav-li"><a href="/profile">Profile</a></li>
+                <li id="nav-li"><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
