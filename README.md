@@ -8,7 +8,9 @@ Project log:
   - 8/8 : i have started the basic set-up of the enviroment and it's required packages. The project is going to be a web-app that assists in the admin tasks of
     mannaging a CCA. i will base the functionalities based on my own CCA; Red Cross Youth.
 
-  - 9/8 : implement register and login processes. lay down the base for permanenent sessions. 
+  - 9/8 : implement register and login processes. lay down the base for permanenent sessions.
+
+  - 10/8 -11/8 : implemented "/logout". realised that for testing any future features i need test data. pushed fresh data to student , teacher & cca tables
     
 Project implementable ideas: 
   - attendance system.
