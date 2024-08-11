@@ -12,32 +12,35 @@ def query(db_name, sql, values=None):
         cur.execute(sql, values)
         return cur.fetchall()
 
-ccas = [  
-    {"name": "Art Club", "location": "School Art Room"},  
-    {"name": "Basketball", "location": "School Gym or Community Sports Complex"},  
-    {"name": "Drama Club", "location": "School Auditorium"},  
-    {"name": "Music Band", "location": "School Music Room"},  
-    {"name": "Science Club", "location": "School Science Lab"},  
-    {"name": "Debate Club", "location": "School Classroom"},  
-    {"name": "Football", "location": "Community Sports Field"},  
-    {"name": "Swimming", "location": "Community Swimming Pool"},  
-    {"name": "Robotics Club", "location": "School Tech Lab"},  
-    {"name": "Eco Club", "location": "Community Garden or School Grounds"},
-    {"name": "Chess Club", "location": "School Library"},
-    {"name": "Photography Club", "location": "School Darkroom or Outdoor Spaces"},
-    {"name": "Guitar Ensemble", "location": "School Music Room"},
-    {"name": "Cooking Club", "location": "Home Economics Room or School Kitchen"},
-    {"name": "Coding Club", "location": "School Computer Lab"},
-    {"name": "Nature Society", "location": "School Garden or Nature Reserve"},
-    {"name": "Language Club", "location": "School Language Lab"},
-    {"name": "Community Service Club", "location": "Various Community Locations"},
-    {"name": "Fashion Design Club", "location": "School Art Room"},
-    {"name": "Film Club", "location": "School AV Room or Theater"}
-]
+ccas = [{'name': 'Art Club', 'location': 'School Art Room', 'Count': 75}, 
+        {'name': 'Basketball', 'location': 'School Gym or Community Sports Complex', 'Count': 75}, 
+        {'name': 'Drama Club', 'location': 'School Auditorium', 'Count': 75}, 
+        {'name': 'Music Band', 'location': 'School Music Room', 'Count': 75}, 
+        {'name': 'Science Club', 'location': 'School Science Lab', 'Count': 75}, 
+        {'name': 'Debate Club', 'location': 'School Classroom', 'Count': 75}, 
+        {'name': 'Football', 'location': 'Community Sports Field', 'Count': 75}, 
+        {'name': 'Swimming', 'location': 'Community Swimming Pool', 'Count': 75}, 
+        {'name': 'Robotics Club', 'location': 'School Tech Lab', 'Count': 75}, 
+        {'name': 'Eco Club', 'location': 'Community Garden or School Grounds', 'Count': 75}, 
+        {'name': 'Chess Club', 'location': 'School Library', 'Count': 75}, 
+        {'name': 'Photography Club', 'location': 'School Darkroom or Outdoor Spaces', 'Count': 75}, 
+        {'name': 'Guitar Ensemble', 'location': 'School Music Room', 'Count': 75}, 
+        {'name': 'Cooking Club', 'location': 'Home Economics Room or School Kitchen', 'Count': 75}, 
+        {'name': 'Coding Club', 'location': 'School Computer Lab', 'Count': 75}, 
+        {'name': 'Nature Society', 'location': 'School Garden or Nature Reserve', 'Count': 75}, 
+        {'name': 'Language Club', 'location': 'School Language Lab', 'Count': 75}, 
+        {'name': 'Community Service Club', 'location': 'Various Community Locations', 'Count': 75}, 
+        {'name': 'Fashion Design Club', 'location': 'School Art Room', 'Count': 75}, 
+        {'name': 'Film Club', 'location': 'School AV Room or Theater', 'Count': 75}]
 
-for item in ccas:
-    name = item["name"]
-    venue = item["location"]
-    mem_cap = random.randint(10,40)
+# for item in ccas:
+#     item["Count"] = 75
 
-    query("Server.db", "INSERT INTO cca (name, member_count, venue) VALUES (?, ?, ?)", (name, mem_cap, venue))
+for student in student_table:
+    a = True
+    while a:
+        chosen_cca = random.choice(ccas)
+        if chosen_cca["Count"] > 0:
+            
+
+# query("Server.db", "INSERT INTO cca (name, member_count, venue) VALUES (?, ?, ?)", (name, mem_cap, venue))
