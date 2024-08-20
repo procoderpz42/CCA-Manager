@@ -131,7 +131,7 @@ def change_password():
     if "uid" not in session:
         return render_template("Change_password.html", session=session)
     if request.method == "POST":
-        if hashhex(request.form.get("cur_pass")) != query("Server.db", f"SELECT hashedpassword FROM {request.form.get("position")} WHERE id = {request.form.get("uid")};"):
+        if hashhex(request.form.get("cur_pass")) != query("Server.db", f"SELECT hashedpassword FROM {request.form.get('position')} WHERE id = {request.form.get('uid')};"):
             if request.form.get("1newpass") == request.form.get("2newpass"):
                 query("Server.db", f"UPDATE SET hashedpassword = '{hashhex(request.form.get('1newpass'))}' WHERE id = {request.form.get('uid')}")
             else:
