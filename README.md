@@ -11,8 +11,25 @@ Project log:
   - 9/8 : implement register and login processes. lay down the base for permanenent sessions.
 
   - 10/8 -11/8 : implemented "/logout". realised that for testing any future features i need test data. pushed fresh data to student , teacher & cca tables
+
+  - 12/8 to 18/8 : have been grinding and got the attendance system to work
+
+  - 19/8 to 20/8 : hosted to render go check it out ( https://cca-manager.onrender.com )
     
 Project implementable ideas: 
-  - attendance system. (Working on it!!!)
-  - assessment (Grade) tracking
-  - submission tracking
+  - attendance system. DONE!!!!
+  - assessment (Grade) tracking (Rejected)
+  - submission tracking (IN the Future)
+  - Tests??? Not sure... Maybe
+
+Future Plan:
+
+- set up a way for students to log into the site and upload their work.
+- teachers can setup the assignment to which students can submit work
+
+------BUT--------
+
+render dont have much disk space...
+so idk...
+
+it sounds counterintuitive with little disk space and the space just grows and grows as years pass by...
