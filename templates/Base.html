@@ -3,22 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <title>HomePage</title>
 </head>
 <body>
-    <header>
-        <nav id="nav">
-            <ul id="nav-ul">
-                <li id="nav-li"><a href="/">Home</a></li>
-                {% if session["position"] == "teacher" %}
-                    <li id="nav-li"><a href="/create_session">Create Session</a></li>
-                {% endif %}
-                <li id="nav-li"><a href="/profile">Profile</a></li>
-                <li id="nav-li"><a href="/logout">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
+    <div class="w3-bar w3-black">
+        <a class="w3-bar-item w3-hover-blue" href="/logout">Logout</a>
+        <a class="w3-bar-item w3-hover-blue" href="/profile">Profile</a>
+        {% if session["position"] == "student" %}
+            <a class="w3-bar-item w3-hover-blue">Assignment Submission</a>
+        {% elif session ["position"] == "teacher" %}
+            <a class="w3-bar-item w3-hover-blue" href="/cca_session">Session Manager</a>
+        {% endif %}
+    </div>
     {% block content %}
     {% endblock %}
 </body>

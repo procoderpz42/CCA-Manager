@@ -1,0 +1,16 @@
+{% extends 'Base.html' %}
+
+{% block content %}
+<form action="/make_session" method="get">
+    <input type="submit" value="Create Session">
+</form>
+
+<form action="/get_session" method="get">
+    <select name="session_id" id="session_id">
+        {% for item in results %}
+        <option value={{ item[0] }}>{{ item[1] }}|{{ item[2] }}|{{ item[3] }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Pull Information">
+</form>
+{% endblock %}

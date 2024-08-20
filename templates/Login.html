@@ -3,20 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <title>Login</title>
 </head>
-<body>
-    <h1>User Login</h1>
-    <button type="button" onclick="location.href = '/register'">Not Registered? Go to Registration</button>
-    <h2 style="color: crimson; border: 4px black solid c; border-radius: 20px; font-size: 40px; background-color: grey;">{{ error }}</h2>
-    <form action="/login" method="post">
-        <label for="position">Role</label><select name="position" id="position">
+<body style="background-color: #ffbf00;">
+    <h2 class="w3-border w3-round w3-text-red w3-xxlarge w3-grey w3-padding-16 w3-center w3-bold" style="background-color: grey;"><b>{{ error }}</h2></b></h2>
+    <form class="w3-container w3-border w3-round w3-khaki w3-padding-24" action="/login" method="post">
+        <h1 class="w3-container w3-blue w3-xxlarge w3-round">User Login</h1>
+        <label class="w3-large" for="position">Role</label>
+        <select class="w3-input w3-blue-gray" name="position" id="position">
             <option value="student">Student</option>
             <option value="teacher">Teacher</option>
-        </select>
-        <label for="Username">User Name:</label><input type="text" name="Username" id="Username"><br>
-        <label for="Password">Password:</label><input type="text" name="Password" id="Password"><br>
-        <input type="submit" value="Login">
+        </select><br>
+        <label class="w3-large" for="Username">User Name:</label><input class="w3-input w3-border w3-round w3-blue-gray" type="text" name="Username" id="Username" required><br>
+        <label class="w3-large" for="Password">Password:</label><input class="w3-input w3-border w3-round w3-blue-gray" type="text" name="Password" id="Password" required><br>
+        <input class="w3-input w3-border w3-round w3-blue-grey w3-hover-blue w3-ripple" type="submit" value="Login">
     </form>
+    <button class="w3-input w3-blue-gray w3-hover-cyan w3-border w3-round w3-margin" type="button" onclick="location.href = '/register'">Not Registered? Go to Registration</button>
 </body>
 </html>

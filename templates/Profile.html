@@ -1,7 +1,16 @@
 {% extends 'Base.html' %}
 
 {% block content %}
-
-
-
+<h1>Profile</h1>
+<h2 style="color: crimson; border: 4px black solid c; border-radius: 20px; font-size: 40px; background-color: grey;">{{ error }}</h2>
+<p id="msg"></p>
+<form action="/profile" method="POST">
+    <label for="First_name">First Name:</label><input type="text" name="First_name" id="First_name" value="{{ session['firstname'] }}" required><br>
+    <label for="Last_name">Last Name:</label><input type="text" name="Last_name" id="Last_name" value="{{ session['lastname'] }}" required><br>
+    <label for="Email">Email:</label><input type="text" name="Email" id="Email" value="{{ session ['email'] }}" required><br>
+    <label for="Nric">NRIC:</label><input type="text" name="Nric" id="Nric" value="{{ session['nric'] }}" required>
+    <input type="submit" value="Update Profile">
+</form>
+<br>
+<button onclick="location.href='/change_password'">Change Password</button>
 {% endblock %}
