@@ -122,7 +122,7 @@ def profile():
         if len(nric) != 9: # NRIC length check
             return render_template("Profile.html", session=session, error="NRIC Invalid")
         # update db
-        query("Server.db", f"UPDATE {pos} SET firstname = {f_name}, lastname = '{l_name}', email = '{email}', nric = '{nric}' WHERE id = '{session["uid"]}';")
+        query("Server.db", f"UPDATE {pos} SET firstname = {f_name}, lastname = '{l_name}', email = '{email}', nric = '{nric}' WHERE id = '{session['uid']}';")
 
         return render_template("Profile.html", session=session, error="")
 
