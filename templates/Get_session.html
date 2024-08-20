@@ -1,8 +1,15 @@
 {% extends 'Base.html' %}
 
 {% block content %}
-<form>
+<script>function select_all() {
+let selects = document.querySelectorAll('select');
+    selects.forEach(select => {
+        select.value = "Present";
+    });}</script>
+<button onclick="select_all()">Set All Present</button>
+<form action="" method="post">
     <table>
+        <input type="hidden" name="session_id" value="{{ session_id }}" hidden>
         <tr>
             <th>Student Name</th>
             <th>Attendance</th>
@@ -18,6 +25,8 @@
             </tr>
         {% endfor %}
     </table>
+    <input type="submit" value="Update Attendance"><br>
+    <input type="reset" value="Reset Attendance">
 </form>
 {% endblock %}
 

@@ -140,8 +140,7 @@ def change_password():
             return render_template("Change_password.html", session=session, error='Current Password Incorrect')
     elif request.method == "GET":
         return render_template("Change_password.html", session=session)
-
-        
+ 
 @app.route("/cca_session", methods=["GET"])
 def cca_session():
     if "uid" not in session:
@@ -155,7 +154,6 @@ def cca_session():
                                     """, (int(datetime.now().year),))
         print(results)
         return render_template("Sessions.html", session=session, results=results)
-
 
 @app.route('/make_session', methods=["GET", "POST"])
 def make_session():
@@ -197,7 +195,7 @@ def get_session():
     if "uid" not in session:
         return redirect(url_for("login"))
     if request.method == "GET":
-        sessionid = request.form.get("session_id")
+        sessionid = request.args.get("session_id")
         results = query("Server.db", """
                                 SELECT student.firstname||' '||student.lastname, student.id, attendance.attendance
                                 FROM student
@@ -208,23 +206,41 @@ def get_session():
                                 LEFT OUTER JOIN attendance
                                 ON attendance.studentid = student.id
                                 WHERE session.sessionid = ?;
-""", (sessionid,))
+""", values=(sessionid,))
         print(sessionid)
         print(results)
-        return render_template("Get_session.html", results=results)
+        return render_template("Get_session.html", results=results, session_id=sessionid)
+    if request.method == "POST":
+        sessionid = request.form.get("session_id")
+        results = query("Server.db", """
+                                SELECT student.id
+                                FROM student
+                                LEFT OUTER JOIN registar
+                                ON student.id = registar.studentid
+                                LEFT OUTER JOIN session
+                                ON registar.ccaid = session.ccaid
+                                LEFT OUTER JOIN attendance
+                                ON attendance.studentid = student.id
+                                WHERE session.sessionid = ?;
+""", values=(sessionid,))
+        attendance = []
+        for item in results:
+            search_id = item[0]
+            attendance.append((search_id, request.form.get(str(search_id))))
         
+        for item in attendance:
+            if item[1] == 'Absent':
+                if len(query("Server.db", "SELECT * FROM attendance WHERE sessionid = ? AND studentid = ?", (sessionid, item[0]))) > 0:
+                    query("Server.db", "DELETE FROM attendance WHERE studentid = ? AND sessionid = ?", (item[0], sessionid))
+            else:
+                if len(query("Server.db", "SELECT * FROM attendance WHERE sessionid = ? AND studentid = ?", (sessionid, item[0]))) > 0:
+                    query("Server.db", "UPDATE attendance SET attendance = ? WHERE sessionid = ? AND studentid = ?", (item[1], sessionid, item[0]))
+                else:
+                    query("Server.db", """
+                                INSERT INTO attendance (sessionid, studentid, attendance)
+                                VALUES (?, ?, ?)""", (sessionid, item[0], item[1]))
+        return redirect(url_for('cca_session'))
         
-
-# name | attendance
-
-# join == student -> registar -> session -> attendance
-# now i have student to session aka attendance...
-# the join tables are the reference table
-# attendance is the score keeping table 
-# search radii of only limit to sessionid
-# pull up the student attendance link
-
-
 if __name__=="__main__":
     app.run(debug=True, port=2000)
 

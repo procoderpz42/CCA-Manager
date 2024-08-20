@@ -8,7 +8,7 @@
 <form action="/get_session" method="get">
     <select name="session_id" id="session_id">
         {% for item in results %}
-        <option value={{ item[0] }}>{{ item[1] }}|{{ item[2] }}|{{ item[3] }}</option>
+        <option value="{{ item[0] | int}}">{{ item[1] }}|{{ item[2] }}|{{ item[3] }}</option>
         {% endfor %}
     </select>
     <input type="submit" value="Pull Information">
