@@ -51,7 +51,7 @@ def login():
         
         session["position"] = position    # ADD Position Status
         session["uid"] = result[0][0]  # ADD Person Id
-        result = query("Server.db", f"SELECT id, firstname, lastname, email, nric FROM {session["position"]} WHERE id = '{session["uid"]}' LIMIT 1;")[0]
+        result = query("Server.db", f"SELECT id, firstname, lastname, email, nric FROM {session['position']} WHERE id = '{session['uid']}' LIMIT 1;")[0]
         session["email"] = result[3]
         session["firstname"] = result[1]
         session["lastname"] = result[2]
@@ -242,5 +242,5 @@ def get_session():
         return redirect(url_for('cca_session'))
         
 if __name__=="__main__":
-    app.run(debug=True, port=2000)
+    app.run(debug=True, port=0.0.0.0)
 
