@@ -45,13 +45,13 @@ def login():
         username = request.form.get("Username")
         password = request.form.get("Password")
         hashed_password = hashhex(password)
-        result = query("Server.db", f"SELECT id FROM {position} WHERE nric = '{username}' AND hashedpassword = '{hashed_password}' LIMIT 1;")
+        result = query("Server.db", f"SELECT id FROM {position} WHERE nric = ? AND hashedpassword = ? LIMIT 1;", (username, hashed_password))
         if len(result) != 1: # did not pull correct record
             return render_template("Login.html", error="Entered partculars are Wrong")
         
         session["position"] = position    # ADD Position Status
         session["uid"] = result[0][0]  # ADD Person Id
-        result = query("Server.db", f"SELECT id, firstname, lastname, email, nric FROM {session['position']} WHERE id = '{session['uid']}' LIMIT 1;")[0]
+        result = query("Server.db", f"SELECT id, firstname, lastname, email, nric FROM {session['position']} WHERE id = ? LIMIT 1;", (session['uid'],))[0]
         session["email"] = result[3]
         session["firstname"] = result[1]
         session["lastname"] = result[2]
@@ -122,7 +122,7 @@ def profile():
         if len(nric) != 9: # NRIC length check
             return render_template("Profile.html", session=session, error="NRIC Invalid")
         # update db
-        query("Server.db", f"UPDATE {pos} SET firstname = {f_name}, lastname = '{l_name}', email = '{email}', nric = '{nric}' WHERE id = '{session['uid']}';")
+        query("Server.db", f"UPDATE {pos} SET firstname = ?, lastname = ?, email = ?, nric = ? WHERE id = ?;", (f_name, l_name, email, nric, session['uid']))
 
         return render_template("Profile.html", session=session, error="")
 
@@ -131,9 +131,9 @@ def change_password():
     if "uid" not in session:
         return render_template("Change_password.html", session=session)
     if request.method == "POST":
-        if hashhex(request.form.get("cur_pass")) != query("Server.db", f"SELECT hashedpassword FROM {request.form.get('position')} WHERE id = {request.form.get('uid')};"):
+        if hashhex(request.form.get("cur_pass")) != query("Server.db", f"SELECT hashedpassword FROM {request.form.get('position')} WHERE id = ?;", (request.form.get('uid'),)):
             if request.form.get("1newpass") == request.form.get("2newpass"):
-                query("Server.db", f"UPDATE SET hashedpassword = '{hashhex(request.form.get('1newpass'))}' WHERE id = {request.form.get('uid')}")
+                query("Server.db", f"UPDATE SET hashedpassword = ? WHERE id = ?", (hashhex(request.form.get('1newpass')), request.form.get('uid')))
             else:
                 return render_template("Change_password.html", session=session, error='New password do not match')
         else:
