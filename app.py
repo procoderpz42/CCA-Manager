@@ -133,7 +133,7 @@ def change_password():
     if request.method == "POST":
         if hashhex(request.form.get("cur_pass")) != query("Server.db", f"SELECT hashedpassword FROM {request.form.get('position')} WHERE id = ?;", (request.form.get('uid'),)):
             if request.form.get("1newpass") == request.form.get("2newpass"):
-                query("Server.db", f"UPDATE {session["position"]} SET hashedpassword = ? WHERE id = ?", (hashhex(request.form.get('1newpass')), request.form.get('uid')))
+                query("Server.db", f"UPDATE {session['position']} SET hashedpassword = ? WHERE id = ?", (hashhex(request.form.get('1newpass')), request.form.get('uid')))
             else:
                 return render_template("Change_password.html", session=session, error='New password do not match')
         else:
