@@ -121,7 +121,12 @@ def profile():
         
         if len(nric) != 9: # NRIC length check
             return render_template("Profile.html", session=session, error="NRIC Invalid")
-        # update db
+        # update session
+        session['firstname'] = f_name
+        session['lastname'] = l_name
+        session['email'] = email
+        session['nric'] = nric
+        #update Database
         query("Server.db", f"UPDATE {pos} SET firstname = ?, lastname = ?, email = ?, nric = ? WHERE id = ?;", (f_name, l_name, email, nric, session['uid']))
 
         return render_template("Profile.html", session=session, error="")
@@ -129,11 +134,12 @@ def profile():
 @app.route("/change_password", methods=["GET", "POST"])
 def change_password():
     if "uid" not in session:
-        return render_template("Change_password.html", session=session)
+        return redirect(url_for('login'))
     if request.method == "POST":
-        if hashhex(request.form.get("cur_pass")) != query("Server.db", f"SELECT hashedpassword FROM {request.form.get('position')} WHERE id = ?;", (request.form.get('uid'),)):
+        if hashhex(request.form.get("cur_pass")) == query("Server.db", f"SELECT hashedpassword FROM {session['position']} WHERE id = ?;", (session["uid"],))[0][0]:
             if request.form.get("1newpass") == request.form.get("2newpass"):
-                query("Server.db", f"UPDATE {session['position']} SET hashedpassword = ? WHERE id = ?", (hashhex(request.form.get('1newpass')), request.form.get('uid')))
+                query("Server.db", f"UPDATE {session['position']} SET hashedpassword = ? WHERE id = ?", (hashhex(request.form.get('1newpass')), session["uid"]))
+                return redirect(url_for('profile'))
             else:
                 return render_template("Change_password.html", session=session, error='New password do not match')
         else:
