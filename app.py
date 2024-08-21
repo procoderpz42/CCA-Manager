@@ -158,7 +158,7 @@ def cca_session():
                                     INNER JOIN cca ON session.ccaid = cca.id
                                     WHERE year = ?;
                                     """, (int(datetime.now().year),))
-        print(results)
+
         return render_template("Sessions.html", session=session, results=results)
 
 @app.route('/make_session', methods=["GET", "POST"])
@@ -185,7 +185,6 @@ def make_session():
         end = request.form.get("end")
         dt_start = datetime.strptime(start, "%H:%M")
         dt_end = datetime.strptime(end, "%H:%M")
-        print(cca,teacheric,teacher_a, date, year,start,end,dt_start,dt_end)
         if teacher_a == teacheric:
             return render_template("Make_session.html", session=session, ccas=ccas, teachers=teachers, error="Teacher In Charge and Assistant Teacher are the Equal")
         if dt_start >= dt_end:
@@ -213,8 +212,6 @@ def get_session():
                                 ON attendance.studentid = student.id
                                 WHERE session.sessionid = ?;
 """, values=(sessionid,))
-        print(sessionid)
-        print(results)
         return render_template("Get_session.html", results=results, session_id=sessionid)
     if request.method == "POST":
         sessionid = request.form.get("session_id")

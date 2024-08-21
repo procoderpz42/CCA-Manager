@@ -1,11 +1,6 @@
 {% extends 'Base.html' %}
 
 {% block content %}
-<script>function select_all() {
-let selects = document.querySelectorAll('select');
-    selects.forEach(select => {
-        select.value = "Present";
-    });}</script>
 <button onclick="select_all()">Set All Present</button>
 <form action="" method="post">
     <table>
@@ -17,16 +12,46 @@ let selects = document.querySelectorAll('select');
         {% for item in results %}
             <tr>
                 <td>{{ item[0] }}</td>
-                <td><select name="{{ item[1] }}" id="{{ item[1] }}">
-                    <option value="Present" {% if item[2] == 'Present' %}selected{% endif %}>Present</option>
-                    <option value="Late" {% if item[2] == 'Late' %}selected{% endif %}>Late</option>
-                    <option value="Absent" {% if item[2] == None %}selected{% endif %}>Absent</option>
-                </select></td>
+                <td>
+                    <select name="{{ item[1] }}" id="{{ item[1] }}">
+                        <option class="w3-green" value="Present" {% if item[2] == 'Present' %}selected{% endif %}>Present</option>
+                        <option class="w3-amber" value="Late" {% if item[2] == 'Late' %}selected{% endif %}>Late</option>
+                        <option class="w3-red" value="Absent" {% if item[2] == None %}selected{% endif %}>Absent</option>
+                    </select>
+                </td>
             </tr>
         {% endfor %}
     </table>
     <input type="submit" value="Update Attendance"><br>
     <input type="reset" value="Reset Attendance">
 </form>
+
+
+<script>
+function select_all() {
+    let selects = document.querySelectorAll('select');
+        selects.forEach(select => {
+            select.value = "Present";
+        });}
+</script>
+
+<script>
+    function updateSelectColor(select) {
+        if (select.value === 'Present') {
+            select.className = 'w3-green';
+        } else if (select.value === 'Late') {
+            select.className = 'w3-yellow';
+        } else if (select.value === 'Absent') {
+            select.className = 'w3-red';
+        }
+    }
+
+    document.querySelectorAll('select').forEach(select => {
+        updateSelectColor(select); // Update color on load
+        select.addEventListener('change', function() {
+            updateSelectColor(this); // Update color on change
+        });
+    });
+</script>
 {% endblock %}
 
